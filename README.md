@@ -1,2 +1,2 @@
 # Software-Maintenance-and-Evolution
-HI welcome, this is for course WIF3005
+HI welcome, this is for course SME
