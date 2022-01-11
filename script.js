@@ -173,11 +173,11 @@ async function recognizeFaces() {
 
 function loadLabeledImages() {
   //const labels = ['Black Widow', 'Captain America', 'Hawkeye' , 'Jim Rhodes', 'Tony Stark', 'Thor', 'Captain Marvel']
-  const labels = ['user'] // for WebCam
+  const labels = ['1'] // for WebCam (Need to make it recognize users)
   return Promise.all(
       labels.map(async (label)=>{
           const descriptions = []
-          for(let i=1; i<=6; i++) {
+          for(let i=1; i<=3; i++) { //loop 3 times
               const img = await faceapi.fetchImage(`labeled_images/${label}/${i}.jpg`)
               const detections = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor()
               console.log(label + i + JSON.stringify(detections))
