@@ -1,4 +1,31 @@
 <?php
+    function compressImage($source, $destination, $quality) { 
+        // Get image info 
+        $imgInfo = getimagesize($source); 
+        $mime = $imgInfo['mime']; 
+         
+        // Create a new image from file 
+        switch($mime){ 
+            case 'image/jpeg': 
+                $image = imagecreatefromjpeg($source); 
+                break; 
+            case 'image/png': 
+                $image = imagecreatefrompng($source); 
+                break; 
+            case 'image/gif': 
+                $image = imagecreatefromgif($source); 
+                break; 
+            default: 
+                $image = imagecreatefromjpeg($source); 
+        } 
+         
+        // Save image 
+        imagejpeg($image, $destination, $quality); 
+         
+        // Return compressed image 
+        return $destination; 
+    } 
+
     session_start();
     include_once "config.php";
     $fname = mysqli_real_escape_string($conn, $_POST['fname']);
@@ -25,7 +52,8 @@
                         if(in_array($img_type, $types) === true){
                             $time = time();
                             $new_img_name = $time.$img_name;
-                            if(move_uploaded_file($tmp_name,"images/".$new_img_name)){
+
+                            if(compressImage($tmp_name, "images/".$new_img_name, 60)){
                                 $ran_id = rand(time(), 100000000);
                                 $status = "Active now";
                                 $encrypt_pass = md5($password);
@@ -58,4 +86,3 @@
     }else{
         echo "All input fields are required!";
     }
-?>
