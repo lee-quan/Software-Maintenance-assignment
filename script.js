@@ -121,6 +121,8 @@ Promise.all([
 var folderExistsResponse = 0;
 var retrivedID;
 var files=[];
+var match = 0;
+var entered = 0;
 
 function start() {
   document.body.append('Models Loaded')
@@ -133,12 +135,12 @@ function start() {
       // console.log("destination: labeled_images/" + retrivedID)
       // console.log("retrivedID: " + retrivedID)
       $.when((getAllDirFiles(`labeled_images/${retrivedID}`)), ).done(function (ajax3Results) {
-        console.log("3rd layer");
+        // console.log("3rd layer");
         console.log(files);
         // console.log(files[2]);
         // console.log(files[3]);
         // console.log(files[4]);
-        if (folderExistsResponse != 0) {
+        if (folderExistsResponse != 0 && files.length != 0) {
           navigator.getUserMedia({
               video: {}
             },
@@ -147,12 +149,13 @@ function start() {
           )
 
           // video.src = '../videos/speech.mp4'
-          console.log('video added')
+          // console.log('video added')
           recognizeFaces()
         }
 
       });
     });
+    
   });
 
 
@@ -185,7 +188,6 @@ async function recognizeFaces() {
         canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
 
         const results = resizedDetections.map((d) => {
-
           return faceMatcher.findBestMatch(d.descriptor)
         })
         results.forEach((result, i) => {
@@ -193,7 +195,14 @@ async function recognizeFaces() {
           const drawBox = new faceapi.draw.DrawBox(box, {
             label: result.toString()
           })
-          // console.log(result.toString());
+
+          if(result['label']==retrivedID && match<=10 && entered==0){
+            match++
+          }else{
+            entered++
+            //redirect user to chat
+          }
+        
           drawBox.draw(canvas)
         })
       }, 100)

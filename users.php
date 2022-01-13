@@ -30,7 +30,7 @@ if (!isset($_SESSION['unique_id'])) {
           </button> -->
           <i class="fas fa-ellipsis-v"type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="#"></a></li>
+            <li><a class="dropdown-item" href="#">Face Unlock</a></li>
             <li><a class="dropdown-item" href="php/logout.php?logout_id=<?php echo $row['unique_id']; ?>">Logout</a></li>
           </ul>
         </div>
@@ -48,7 +48,7 @@ if (!isset($_SESSION['unique_id'])) {
   </div>
 
   <script src="javascript/users.js"></script>
-
+  
 
 </body>
 
