@@ -46,6 +46,7 @@ async function recognizeFaces() {
     const faceMatcher = new faceapi.FaceMatcher(labeledDescriptors, 0.5)
     $('#videoInput').trigger('play');
     $('#camera_change').text("Validation in progress")
+    $('#progressMatchHeader').prop("hidden", false)
     video.addEventListener('play', async () => {
       // console.log('Playing')
       const canvas = faceapi.createCanvasFromMedia(video)
@@ -68,20 +69,21 @@ async function recognizeFaces() {
             label: result.toString()
           })
 
-          if(result['label']!=retrivedID){
+          if(result['label']!=retrivedID){ //does not match
             not_match++;
           }
 
-          if(not_match >= 10){
-            window.location.href = 'users.php?notmatch=nm';
+          if(not_match >= 10){ //redirect user after a number of not match
+            window.location.href = 'users.php?notmatch=nm'; 
           }
 
           if(result['label']==retrivedID && match<=10 && entered==0){
             match++
-            console.log(match);
+            var matchProgress = (match/10)*100
+            $('#progressMatch').text(matchProgress + "%")
           }
 
-          if(match >= 10){
+          if(match >= 10){ //match
             entered++
             window.location.href = succeedRedirect;
           }
