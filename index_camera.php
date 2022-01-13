@@ -39,8 +39,8 @@
     div{
       position: absolute;
       background-color: white;
-      height: 200px;
-      width: 200px;
+      height: 500px;
+      width: 500px;
       z-index: 2;
 
     }
@@ -54,7 +54,7 @@
 <body>
   <!-- <input type="file" id="imageUpload" > -->
   <h3>Please make sure your surrounding is bright</h3>
-  <h3 id="camera_change">Camera is starting, please wait for awhile</h3>
+  <h3 id="camera_change">Camera is starting, please wait for awhile </h3> <h3 id="progressMatchHeader" hidden>Progress: <span id="progressMatch"></span></h3>
   <div></div>
   <video id="videoInput" width="50" height="70" muted>
 </body>
