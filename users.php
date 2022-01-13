@@ -6,7 +6,7 @@ if (!isset($_SESSION['unique_id'])) {
 }
 
 ?>
-<?php include_once "header.php";?>
+<?php include_once "header.php"; ?>
 <script src="face-api.min.js"></script>
 <!-- <script defer src="script.js"></script> -->
 
@@ -28,10 +28,23 @@ if (!isset($_SESSION['unique_id'])) {
           </div>
         </div>
         <div class="dropdown" style="margin-right: 20px">
-          <!-- <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown button
-          </button> -->
-          <i class="fas fa-ellipsis-v" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
+
+          <!-- <div class="mx-5" style="display: inline-block;">
+            <i class="far fa-bell fa-lg " type="button"></i>
+            <span class="badge badge-pill badge-primary" style="position: relative; right: 15px; top: -10px;">
+              99
+            </span>
+
+          </div> -->
+          <i class="far fa-bell fa-lg position-relative mx-5" type="button">
+            <span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger" style="font-size: .45em; padding: .35em .45em; top:-3px">
+              <!-- 99+ -->
+              <span class="">unread messages</span>
+            </span>
+          </i>
+
+
+          <i class="fas fa-ellipsis-v fa-lg" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <li><a class="dropdown-item" href="#">Face Unlock Settings</a></li>
             <hr>

@@ -83,7 +83,7 @@ async function recognizeFaces() {
             $('#progressMatch').text(matchProgress + "%")
           }
 
-          if(match >= 10){ //match
+          if(match >= 10 && entered==0){ //match
             entered++
             window.location.href = succeedRedirect;
           }
