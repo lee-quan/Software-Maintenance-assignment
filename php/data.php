@@ -14,16 +14,30 @@
         }
         ($row['status'] == "Offline now") ? $offline = "offline" : $offline = "";
         ($outgoing_id == $row['unique_id']) ? $hid_me = "hide" : $hid_me = "";
+    
+        if(in_array($row['unique_id'], $lock_arr)){
+            $output .= '<a href="index_camera.php?user_id='. $row['unique_id'] .'" style="text-decoration: none;">
+                        <div class="content">
+                        <img src="php/images/'. $row['img'] .'" alt="">
+                        <div class="details">
+                            <span>'. $row['fname']. " " . $row['lname'] .'</span>
+                            <p>'. $you . $msg .'</p>
+                        </div>
+                        </div>
+                        <div class="status-dot '. $offline .'"><i class="fas fa-circle"></i></div>
+                    </a>';
+        }else{
+            $output .= '<a href="chat.php?user_id='. $row['unique_id'] .'" style="text-decoration: none;">
+                        <div class="content">
+                        <img src="php/images/'. $row['img'] .'" alt="">
+                        <div class="details">
+                            <span>'. $row['fname']. " " . $row['lname'] .'</span>
+                            <p>'. $you . $msg .'</p>
+                        </div>
+                        </div>
+                        <div class="status-dot '. $offline .'"><i class="fas fa-circle"></i></div>
+                    </a>';
+        }
 
-        $output .= '<a href="chat.php?user_id='. $row['unique_id'] .'" style="text-decoration: none;">
-                    <div class="content">
-                    <img src="php/images/'. $row['img'] .'" alt="">
-                    <div class="details">
-                        <span>'. $row['fname']. " " . $row['lname'] .'</span>
-                        <p>'. $you . $msg .'</p>
-                    </div>
-                    </div>
-                    <div class="status-dot '. $offline .'"><i class="fas fa-circle"></i></div>
-                </a>';
     }
 ?>
