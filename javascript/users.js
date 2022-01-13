@@ -49,6 +49,31 @@ setInterval(() => {
   xhr.send();
 }, 500);
 
+setInterval(() => {
+  $.ajax({
+    type: "GET",
+    url: "php/notification.php",
+    data: "data",
+    success: function (response) {
+      console.log(response)
+      $("#notification-count").text(response);
+    }
+  });
+}, 1000);
+
+$("#dropdownMenuButton2").click(function (e) { 
+  $.ajax({
+      type: "GET",
+      url: "php/get-notification.php",
+      data: "data",
+      success: function (response) {
+          // console.log(response);
+          $('#notification_dropdown').html(response);
+      }
+  });
+  
+});
+
 
 $(window).focus(function () {
   console.log('Focus');
