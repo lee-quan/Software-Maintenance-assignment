@@ -57,6 +57,18 @@ setInterval(() =>{
     xhr.send("incoming_id="+incoming_id);
 }, 500);
 
+$.ajax({
+    type: "POST",
+    url: "php/read.php",
+    data: {
+        incoming_id : incoming_id
+    },
+    
+    success: function (response) {
+        
+    }
+});
+
 function scrollToBottom(){
     chatBox.scrollTop = chatBox.scrollHeight;
   }
