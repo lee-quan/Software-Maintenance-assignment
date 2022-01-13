@@ -20,5 +20,23 @@
     }elseif(mysqli_num_rows($query) > 0){
         include_once "data.php";
     }
-    echo $output;
+    // echo $output;
+
+    
+
+    $sortColArr = array_column($sortArr, 'msg_id');
+    array_multisort($sortColArr, SORT_DESC, $sortArr);
+
+    usort($sortArr, function ($item1, $item2) {
+        return $item2['msg_id'] <=> $item1['msg_id'];
+    });
+
+    // print_r($sortArr[0]);
+
+    foreach ($sortArr as $val => $result){
+        print_r($result['output']) ;
+        // $output .= $result[$val];
+    }
+
+    // echo $output;
 ?>
