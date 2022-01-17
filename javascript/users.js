@@ -74,6 +74,20 @@ $("#dropdownMenuButton2").click(function (e) {
   
 });
 
+$(document).ready(function () {
+  console.log('Focus');
+  $.ajax({
+    type: "POST",
+    url: "php/setActive.php",
+    data: {
+      active : "Active now"
+    },
+    success: function (response) {
+      console.log("Active")
+    }
+  });
+});
+
 
 $(window).focus(function () {
   console.log('Focus');
