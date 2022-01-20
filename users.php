@@ -43,7 +43,7 @@ if (!isset($_SESSION['unique_id'])) {
           <i class="fas fa-ellipsis-v fa-lg" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <div>
-              <li><a class="dropdown-item" href="#">Face Unlock Settings</a></li>
+              <li><a class="dropdown-item" href="imageSubmit.php">Face Unlock Settings</a></li>
               <hr>
               <li><a class="dropdown-item" href="php/logout.php?logout_id=<?php echo $row['unique_id']; ?>">Logout</a></li>
             </div>

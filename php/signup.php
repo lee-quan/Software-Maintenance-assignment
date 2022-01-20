@@ -61,7 +61,7 @@
                                 VALUES ({$ran_id}, '{$fname}','{$lname}', '{$email}', '{$encrypt_pass}', '{$new_img_name}', '{$status}')";
                                 $insert_query = mysqli_query($conn, $gen);
                                 
-                                print_r($gen);
+                                // print_r($gen);
 
                                 if($insert_query){
                                     $select_sql2 = mysqli_query($conn, "SELECT * FROM users WHERE email = '{$email}'");

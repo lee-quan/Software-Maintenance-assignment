@@ -15,5 +15,5 @@ if (isset($_SESSION['unique_id'])) {
     $query = mysqli_query($conn, $sql);
 
     // $resultArr = $query -> fetch_all(MYSQLI_ASSOC);
-    print_r($sql);
+    // print_r($sql);
 }

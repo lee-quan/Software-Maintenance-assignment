@@ -11,7 +11,6 @@
     $row = $qeury_lock->fetch_assoc();
     $lock_query = $row['lock'];
     $lock_remove_space = str_replace(' ', '', $lock_query);
-    // print_r($row);
     $lock_arr = explode("|",$lock_remove_space) ; //all the user that this user has lock
 
     $output = "";
