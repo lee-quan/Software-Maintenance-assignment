@@ -1,4 +1,12 @@
 <?php
+    $sql3 = "SELECT * FROM users WHERE unique_id = {$outgoing_id} ORDER BY user_id DESC";
+    $query3 = mysqli_query($conn, $sql3);
+    $qeury_lock = $query3;
+    $row = $qeury_lock->fetch_assoc();
+    $lock_query = $row['lock'];
+    $lock_remove_space = str_replace(' ', '', $lock_query);
+    $lock_arr = explode("|",$lock_remove_space) ; //all the user that this user has lock
+
     $sortArr = [];
     $user_id = $_SESSION['user_id'];
     $folder    = "../labeled_images/$user_id";
@@ -86,3 +94,19 @@
         }
 
     }
+
+    $sortColArr = array_column($sortArr, 'msg_id');
+        array_multisort($sortColArr, SORT_DESC, $sortArr);
+    
+        usort($sortArr, function ($item1, $item2) {
+            return $item2['msg_id'] <=> $item1['msg_id'];
+        });
+    
+        usort($sortArr, function ($item1, $item2) {
+            return $item2['priority'] <=> $item1['priority'];
+        });
+    
+        foreach ($sortArr as $val => $result){
+            print_r($result['output']) ;
+           
+        }

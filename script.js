@@ -1,5 +1,4 @@
 const imageUpload = document.getElementById('imageUpload')
-// const video = document.getElementById('video')
 const video = document.getElementById('videoInput')
 
 Promise.all([
@@ -36,7 +35,6 @@ function start() {
     });
   });
 }
-
 
 
 async function recognizeFaces() {
