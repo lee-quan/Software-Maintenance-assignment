@@ -24,41 +24,98 @@ if (file_exists($folder)) {
     $files = array_diff(scandir($path), array('.', '..'));
 }
 
+include_once "header.php";
 $imageSubmitetd = (sizeof($files));
 ?>
 
-<h3>Must submit 3 picture</h3>
+<body>
+    <div class="wrapper">
+        <div class="users">
+            <header>
 
-<p>Image submitted: <?= $imageSubmitetd ?></p>
+                <div class="content">
+                    <?php
+                    $sql = mysqli_query($conn, "SELECT * FROM users WHERE unique_id = {$_SESSION['unique_id']}");
+                    if (mysqli_num_rows($sql) > 0) {
+                        $row = mysqli_fetch_assoc($sql);
+                    }
+                    ?>
+                    <a href="face_unlock_settings.php" class="align-content-center" style="color: #333;"><i class="fas fa-arrow-left"></i></a>
+                    <img src="php/images/<?php echo $row['img']; ?>" alt="">
+                    <div class="details">
+                        <span><?php echo $row['fname'] . " " . $row['lname'] ?></span>
+                        <p><?php echo $row['status']; ?></p>
+                    </div>
+                </div>
+                <div class="dropdown" style="margin-right: 20px">
+                    <i class="fas fa-ellipsis-v fa-lg" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <div>
+                            <li><a class="dropdown-item" href="#">Face Unlock Settings</a></li>
+                            <hr>
+                            <li><a class="dropdown-item" href="php/logout.php?logout_id=<?php echo $row['unique_id']; ?>">Logout</a></li>
+                        </div>
+                    </ul>
+
+
+            </header>
+            <div style="min-height:500px; max-height:500px; " class="d-flex flex-column align-items-center justify-content-center">
+
+
+
+                <h4>Must submit 3 picture</h4>
+
+                <p>Image submitted: <?= $imageSubmitetd ?></p>
+
+                <ul class="list-group-flush w-100">
+                    <?php
+                    foreach ($files as $file) {
+                        echo "<li class='list-group-item d-flex justify-content-between align-items-center'>$file <button class='btn btn-outline-danger unset' filename='$file'><i class='fas fa-trash'></i> </button></li>";
+                    }
+                    if ($imageSubmitetd < 3) {
+                        $Left = 3 - $imageSubmitetd;
+                    }
+                    ?>
+                </ul>
+                <br>
+
+                <!-- OLD WAY -->
+                
+                <!-- <?php if ($imageSubmitetd < 3) : ?>
+                    <form class="d-flex flex-column align-items-center" action="#" method="POST" enctype="multipart/form-data">
+                        <input class="form-control mb-4" type="file" name="image">
+                        <button class="btn btn-outline-secondary" type="submit" name='submit' id='faceData'> Submit Face Data </button>
+                    </form>
+                <?php else : ?>
+                    <form class="d-flex flex-column align-items-center" action="#" method="POST" enctype="multipart/form-data">
+                        <input class="form-control mb-4" type="file" name="image" disabled>
+                        <button class="btn btn-outline-secondary" type="submit" name='submit' id='faceData' disabled> Submit Face Data </button>
+                    </form>
+                <?php endif ?> -->
+
+                <!-- NEW WAY to disable buttons if submitted >= 3-->
+                <form class="d-flex flex-column align-items-center" action="#" method="POST" enctype="multipart/form-data">
+                    <input class="form-control mb-4" type="file" name="image" <?php echo"".($imageSubmitetd < 3 ? '' : 'disabled') ?>>
+                    <button class="btn btn-outline-secondary" type="submit" name='submit' id='faceData' <?php echo"".($imageSubmitetd < 3 ? '' : 'disabled') ?>> Submit Face Data </button>
+                </form>
+
+
+
+
+
+
+            </div>
+            </section>
+        </div>
+    </div>
+</body>
 
 <?php
 // unlink("test.txt");
 
 ?>
 
-<ul>
-    <?php
-    foreach ($files as $file) {
-        echo "<li>$file <button class='unset' filename='$file'> delete </button></li>";
-    }
-    if ($imageSubmitetd < 3) {
-        $Left = 3 - $imageSubmitetd;
 
-    }
-    ?>
-</ul>
-<br>
-<?php if ($imageSubmitetd < 3) : ?>
-    <form action="#" method="POST" enctype="multipart/form-data">
-        <input type="file" name="image">
-        <button type="submit" name='submit' id='faceData'> Submit Face Data </button>
-    </form>
-<?php else: ?>
-    <form action="#" method="POST" enctype="multipart/form-data">
-        <input type="file" name="image" disabled>
-        <button type="submit" name='submit' id='faceData' disabled> Submit Face Data </button>
-    </form>
-<?php endif ?>
 <?php
 
 function compressImage($source, $destination, $quality)
@@ -117,32 +174,31 @@ if (isset($_POST['submit'])) {
             echo "Please upload an image file - jpeg, png, jpg";
         }
     } else {
-        echo "nto set";
+        echo "not set";
     }
 }
 
 ?>
 
 <script>
-$(".unset").click(function (e) { 
-    e.preventDefault();
-    // alert(this.attr("filename"));
-    var filename = ($(this).attr("filename"));
-    var completePath = ("../<?= $folder."/"?>"+filename);
-    $.ajax({
-        type: "GET",
-        url: "php/unlinkPhoto.php",
-        data: {
-            path : completePath
-        },
-        success: function (response) {
-            console.log(response);
-            alert("Succesfully deleted");
-            window.location.replace('imageSubmit.php')
-        }
+    $(".unset").click(function(e) {
+        e.preventDefault();
+        // alert(this.attr("filename"));
+        var filename = ($(this).attr("filename"));
+        var completePath = ("../<?= $folder . "/" ?>" + filename);
+        $.ajax({
+            type: "GET",
+            url: "php/unlinkPhoto.php",
+            data: {
+                path: completePath
+            },
+            success: function(response) {
+                console.log(response);
+                alert("Succesfully deleted");
+                window.location.replace('imageSubmit.php')
+            }
+        });
     });
-});
-
 </script>
 
 <!-- <script>

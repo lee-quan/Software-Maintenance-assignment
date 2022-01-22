@@ -53,7 +53,7 @@
                             $time = time();
                             $new_img_name = $time.$img_name;
 
-                            if(compressImage($tmp_name, "images/".$new_img_name, 60)){
+                            if(compressImage($tmp_name, "images/".$new_img_name, 70)){
                                 $ran_id = rand(time(), 100000000);
                                 $status = "Active now";
                                 $encrypt_pass = md5($password);

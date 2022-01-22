@@ -1,5 +1,19 @@
 <?php
     $sortArr = [];
+    $user_id = $_SESSION['user_id'];
+    $folder    = "../labeled_images/$user_id";
+    $entry = true;
+    //check if any folder exists, if no make a new directory
+
+    if (file_exists($folder)) {
+        $path    = $folder;
+        $files = array_diff(scandir($path), array('.', '..'));
+        if(sizeof($files) < 3){
+            $entry = false;
+        }
+    }else{
+        $entry = false;
+    }
     while($row = mysqli_fetch_assoc($query)){
         $sql2 = "SELECT * FROM messages WHERE (incoming_msg_id = {$row['unique_id']}
                 OR outgoing_msg_id = {$row['unique_id']}) AND (outgoing_msg_id = {$outgoing_id} 
@@ -30,7 +44,8 @@
         }
 
         if(in_array($row['unique_id'], $lock_arr)){
-            $temp = '<a id="'.$row['unique_id'].'" href="index_camera.php?user_id='. $row['unique_id'] .'" style="text-decoration: none;">
+            if(!$entry){
+                $temp = '<a id="'.$row['unique_id'].'" href="facial_recog_add_photo.php" style="text-decoration: none;">
                         <div class="content">
                         <img src="php/images/'. $row['img'] .'" alt="">
                         <div class="details">
@@ -40,6 +55,20 @@
                         </div>
                         <div class="status-dot '. $offline .'"><i class="fas fa-circle"></i></div>
                     </a>';
+            }else{
+                $temp = '<a id="'.$row['unique_id'].'" href="index_camera.php?user_id='. $row['unique_id'] .'" style="text-decoration: none;">
+                            <div class="content">
+                            <img src="php/images/'. $row['img'] .'" alt="">
+                            <div class="details">
+                                '.$namehighlight.'
+                                <p>'. $you . $msg .'</p>
+                            </div>
+                            </div>
+                            <div class="status-dot '. $offline .'"><i class="fas fa-circle"></i></div>
+                        </a>';
+            }
+
+
             array_push($sortArr, array("msg_id"=>$msg_id, "output"=>$temp, "priority" => $priority));
         }else{
 
@@ -57,4 +86,3 @@
         }
 
     }
-?>

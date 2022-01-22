@@ -1,10 +1,11 @@
-<?php 
-  session_start();
-  $user_id = $_SESSION['user_id'];
-  $navigateTo = $_GET['user_id']
+<?php
+session_start();
+$user_id = $_SESSION['user_id'];
+$navigateTo = $_GET['user_id']
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +13,6 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <script>
     var succeedRedirect = "chat.php?user_id=<?= $navigateTo ?>";
-
   </script>
   <script defer src="face-api.min.js"></script>
   <script defer src="script.js"></script>
@@ -36,7 +36,7 @@
       z-index: -2;
     }
 
-    div{
+    div {
       position: absolute;
       background-color: white;
       height: 500px;
@@ -45,17 +45,24 @@
 
     }
 
-    h3{
+    h3 {
       z-index: 4;
     }
-
   </style>
 </head>
+
 <body>
   <!-- <input type="file" id="imageUpload" > -->
   <h3>Please make sure your surrounding is bright</h3>
-  <h3 id="camera_change">Camera is starting, please wait for awhile </h3> <h3 id="progressMatchHeader" hidden>Progress: <span id="progressMatch"></span></h3>
-  <div></div>
-  <video id="videoInput" width="50" height="70" muted>
+  <h3 id="camera_change">Camera is starting, please wait for awhile </h3>
+  <h3 id="progressMatchHeader" hidden>Progress: <span id="progressMatch"></span></h3>
+  <!-- Loading Spinner -->
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+  </section>
+  <div ></div>
+  <video id="videoInput" width="10" height="20" muted>
 </body>
+
 </html>
