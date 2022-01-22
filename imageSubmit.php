@@ -149,7 +149,7 @@ function compressImage($source, $destination, $quality)
 
 if (isset($_POST['submit'])) {
     echo "hihi";
-    print_r($_FILES);
+    // print_r($_FILES);
     if (isset($_FILES['image'])) {
         $img_name = $_FILES['image']['name'];
         $img_type = $_FILES['image']['type'];
