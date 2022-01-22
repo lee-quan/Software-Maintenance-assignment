@@ -105,7 +105,7 @@ function checkFolderExists(path) {
     success: function (response) {
       folderExistsResponse = response;
     }
-  });;
+  });
 }
 
 function getSessionID() {
@@ -127,7 +127,6 @@ function getAllDirFiles(dir){
     },
     success: function (response) {
       files = Object.values(JSON.parse(response))
-      
     }
   });
 }

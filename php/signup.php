@@ -53,12 +53,16 @@
                             $time = time();
                             $new_img_name = $time.$img_name;
 
-                            if(compressImage($tmp_name, "images/".$new_img_name, 60)){
+                            if(compressImage($tmp_name, "images/".$new_img_name, 70)){
                                 $ran_id = rand(time(), 100000000);
                                 $status = "Active now";
                                 $encrypt_pass = md5($password);
-                                $insert_query = mysqli_query($conn, "INSERT INTO users (unique_id, fname, lname, email, password, img, status)
-                                VALUES ({$ran_id}, '{$fname}','{$lname}', '{$email}', '{$encrypt_pass}', '{$new_img_name}', '{$status}')");
+                                $gen = "INSERT INTO users (unique_id, fname, lname, email, password, img, status)
+                                VALUES ({$ran_id}, '{$fname}','{$lname}', '{$email}', '{$encrypt_pass}', '{$new_img_name}', '{$status}')";
+                                $insert_query = mysqli_query($conn, $gen);
+                                
+                                // print_r($gen);
+
                                 if($insert_query){
                                     $select_sql2 = mysqli_query($conn, "SELECT * FROM users WHERE email = '{$email}'");
                                     if(mysqli_num_rows($select_sql2) > 0){
