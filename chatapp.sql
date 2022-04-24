@@ -1,12 +1,6 @@
--- phpMyAdmin SQL Dump
--- version 5.1.0
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: Mar 30, 2022 at 07:44 AM
--- Server version: 10.4.19-MariaDB
--- PHP Version: 7.3.28
+DROP schema IF EXISTs  chatapp;
 
+CREATE schema chatapp;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -24,10 +18,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `messages`
+-- Table structure for TABLE `chatapp`.`messages`
 --
 
-CREATE TABLE `messages` (
+CREATE TABLE `chatapp`.`messages` (
   `msg_id` int(11) NOT NULL,
   `incoming_msg_id` int(255) NOT NULL,
   `outgoing_msg_id` int(255) NOT NULL,
@@ -37,10 +31,10 @@ CREATE TABLE `messages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `messages`
+-- Dumping data for TABLE `chatapp`.`messages`
 --
 
-INSERT INTO `messages` (`msg_id`, `incoming_msg_id`, `outgoing_msg_id`, `msg`, `read`, `date`) VALUES
+INSERT INTO `chatapp`.`messages` (`msg_id`, `incoming_msg_id`, `outgoing_msg_id`, `msg`, `read`, `date`) VALUES
 (18, 500163789, 873798935, 'hi this is me trestionmg', 1, '2022-01-17 22:03:16'),
 (19, 873798935, 500163789, 'heloo', 0, '2022-01-17 22:03:48'),
 (20, 916171935, 500163789, 'Hi i just want to test the notification', 1, '2022-01-22 23:54:35'),
@@ -50,10 +44,10 @@ INSERT INTO `messages` (`msg_id`, `incoming_msg_id`, `outgoing_msg_id`, `msg`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Table structure for TABLE `chatapp`.`users`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE `chatapp`.`users` (
   `user_id` int(11) NOT NULL,
   `unique_id` int(255) NOT NULL,
   `fname` varchar(255) NOT NULL,
@@ -66,10 +60,10 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `users`
+-- Dumping data for TABLE `chatapp`.`users`
 --
 
-INSERT INTO `users` (`user_id`, `unique_id`, `fname`, `lname`, `email`, `password`, `img`, `status`, `lock`) VALUES
+INSERT INTO `chatapp`.`users` (`user_id`, `unique_id`, `fname`, `lname`, `email`, `password`, `img`, `status`, `lock`) VALUES
 (1, 500163789, 'ELWIN', 'VON', 'wif180013@siswa.um.edu.my', '0192023a7bbd73250516f069df18b500', '1640752681Happy_icon.png', 'Active now', '|1447032531'),
 (2, 1447032531, 'ELVINA', 'VON', 'elwinvon.ev@gmail.com', '0192023a7bbd73250516f069df18b500', '1640752730realize.png', 'Offline now', ''),
 (3, 916171935, 'EDWARD', 'VON', 'elwinvon@rocketmail.com', '0192023a7bbd73250516f069df18b500', '1640752765cute excited boy.png', 'Offline now', ''),
@@ -81,15 +75,15 @@ INSERT INTO `users` (`user_id`, `unique_id`, `fname`, `lname`, `email`, `passwor
 --
 
 --
--- Indexes for table `messages`
+-- Indexes for TABLE `chatapp`.`messages`
 --
-ALTER TABLE `messages`
+ALTER TABLE `chatapp`.`messages`
   ADD PRIMARY KEY (`msg_id`);
 
 --
--- Indexes for table `users`
+-- Indexes for TABLE `chatapp`.`users`
 --
-ALTER TABLE `users`
+ALTER TABLE `chatapp`.`users`
   ADD PRIMARY KEY (`user_id`);
 
 --
@@ -97,15 +91,15 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `messages`
+-- AUTO_INCREMENT for TABLE `chatapp`.`messages`
 --
-ALTER TABLE `messages`
+ALTER TABLE `chatapp`.`messages`
   MODIFY `msg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT for TABLE `chatapp`.`users`
 --
-ALTER TABLE `users`
+ALTER TABLE `chatapp`.`users`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 COMMIT;
 
