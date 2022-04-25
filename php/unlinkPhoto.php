@@ -1,9 +1,13 @@
 <?php
-
-print_r("hi");
-if(isset($_GET['path'])){
-    $file = $_GET['path'];
-    unlink($file);
-    echo "success";
+session_start();
+include_once "config.php";
+if(isset($_GET['id'])){
+    $sql = mysqli_query($conn, "DELETE FROM `chatapp`.`face_unlock` WHERE (`img_id` = '{$_GET['id']}');");
+    if($sql){
+        echo 'Success!';
+    }else{
+        echo 'Something Went Wrong!';
+    }
 }
+
 ?>

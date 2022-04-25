@@ -1,27 +1,9 @@
 <?php
-$sql3 = "SELECT * FROM users WHERE unique_id = {$outgoing_id} ORDER BY user_id DESC";
-$query3 = mysqli_query($conn, $sql3);
-$qeury_lock = $query3;
-$row = $qeury_lock->fetch_assoc();
-$lock_query = $row['lock'];
-$lock_remove_space = str_replace(' ', '', $lock_query);
-$lock_arr = explode("|", $lock_remove_space); //all the user that this user has lock
+$sql = "SELECT * FROM users WHERE NOT unique_id = {$outgoing_id} ORDER BY user_id DESC";
+$query = mysqli_query($conn, $sql);
+$row = $query->fetch_assoc();
 
-$sortArr = [];
-$user_id = $_SESSION['user_id'];
-$folder    = "../labeled_images/$user_id";
-$entry = true;
-//check if any folder exists, if no make a new directory
 
-if (file_exists($folder)) {
-    $path    = $folder;
-    $files = array_diff(scandir($path), array('.', '..'));
-    if (sizeof($files) < 3) {
-        $entry = false;
-    }
-} else {
-    $entry = false;
-}
 
 $sql2 = "SELECT * FROM users u
     LEFT JOIN 
@@ -55,15 +37,16 @@ while ($row2 = mysqli_fetch_assoc($query2)) {
         $yousent = $row2['outgoing_msg_id'];
     }
 
-    if ($read == 0 && $yousent != $outgoing_id && $result != "No message available") {
-        $namehighlight =  '<span class="text-primary">' . $row2['fname'] . " " . $row2['lname'] . '</span>';
-    } else {
-        $namehighlight =  '<span >' . $row2['fname'] . " " . $row2['lname'] . '</span>';
-    }
 
-    echo '<a id="' . $row2['unique_id'] . '" href="chat.php?user_id=' . $row2['unique_id'] . '" style="text-decoration: none;">
+    if (isset($row2['msg_id'])) {
+        if ($read == 0 && $row2['outgoing_msg_id'] != $outgoing_id) {
+            $namehighlight =  '<span class="text-primary">' . $row2['fname'] . " " . $row2['lname'] . '</span>';
+        } else {
+            $namehighlight =  '<span >' . $row2['fname'] . " " . $row2['lname'] . '</span>';
+        }
+        echo '<a id="' . $row2['unique_id'] . '" href="chat.php?user_id=' . $row2['unique_id'] . '" style="text-decoration: none;">
                         <div class="content">
-                        <img src="php/images/' . $row2['img'] . '" alt="">
+                        <img src="data:'. $row2['img_type'].";base64,".$row2['img'].' alt="">
                         <div class="details">
                         ' . $namehighlight . '
                             <p>' . $you . $msg . '</p>
@@ -71,4 +54,17 @@ while ($row2 = mysqli_fetch_assoc($query2)) {
                         </div>
                         <div class="status-dot ' . $offline . '"><i class="fas fa-circle"></i></div>
                     </a>';
+    } else {
+        $namehighlight =  '<span >' . $row2['fname'] . " " . $row2['lname'] . '</span>';
+        echo '<a id="' . $row2['unique_id'] . '" href="chat.php?user_id=' . $row2['unique_id'] . '" style="text-decoration: none;">
+                        <div class="content">' 
+                        .'                        <img src="data:'. $row2['img_type'].";base64,".$row2['img'].' alt="">'
+                        .'<div class="details">
+                        ' . $namehighlight . '
+                            <p> No message... </p>
+                        </div>
+                        </div>
+                        <div class="status-dot ' . $offline . '"><i class="fas fa-circle"></i></div>
+                    </a>';
+    }
 }

@@ -3,27 +3,9 @@
 session_start();
 include_once "php/config.php";
 $user_id = $_SESSION['user_id'];
-$imageSubmitetd = 0;
-
-$folder    = "labeled_images/$user_id";
-//check if any folder exists, if no make a new directory
-
-if (file_exists($folder)) {
-    // echo 1;
-    // $path    = "../".$_GET['dir'];
-    $path    = $folder;
-    $files = array_diff(scandir($path), array('.', '..'));
-
-    // print_r(json_encode($files));
-} else {
-    // echo 0;
-    mkdir($folder, 0777, true);
-    $path    = $folder;
-    $files = array_diff(scandir($path), array('.', '..'));
-}
 
 include_once "header.php";
-$imageSubmitetd = (sizeof($files));
+
 ?>
 
 <body>
@@ -61,7 +43,7 @@ $imageSubmitetd = (sizeof($files));
 
                 <div class="w-100 d-flex flex-column my-4 align-items-center">
                     <video class="w-100" muted id="video" playsinline autoplay></video>
-                    <canvas hidden id="canvas"  class=""></canvas>
+                    <canvas hidden id="canvas" class=""></canvas>
                 </div>
 
                 <div class="controller d-flex justify-content-between">
@@ -122,7 +104,7 @@ $imageSubmitetd = (sizeof($files));
         const submitButton = document.getElementById("submit");
 
         snap.addEventListener("click", function() {
-            context.drawImage(video, 0, 0, 300,160);
+            context.drawImage(video, 0, 0, 300, 160);
             videoFrame.hidden = true;
             pictureCanvas.hidden = false;
             snap.hidden = true;
@@ -130,8 +112,7 @@ $imageSubmitetd = (sizeof($files));
             submitButton.hidden = false;
 
             var image = new Image();
-            image.src = canvas.toDataURL('image/jpeg',1.0);
-            console.log(canvas.toDataURL());
+            image.src = canvas.toDataURL('image/jpeg', 1.0);
             // document.getElementById('my_hidden_img').src = image;
             document.getElementById('my_hidden_img').value = canvas.toDataURL();
         });
@@ -175,21 +156,29 @@ $imageSubmitetd = (sizeof($files));
 
     if (isset($_POST['submit'])) {
         $img = $_POST['image'];
-        $img = str_replace('data:image/png;base64,', '', $img);
-        $img = str_replace(' ', '+', $img);
-        $fileData = base64_decode($img);
-        //saving
-        $fileName = 'photo.jpg';
-        file_put_contents($fileName, $fileData);
 
-        $time = time();
-        $new_img_name = $time . $img_name . ".jpg";
+        $gen = "INSERT INTO face_unlock (user_id, img, img_id, img_type)
+        VALUES ('{$user_id}','" . str_replace('data:image/png;base64,', '', $img) . "','" . time() . "','image/png')";
+        $insert_query = mysqli_query($conn, $gen);
 
-        if (compressImage($fileName, $folder . "/" . $new_img_name, 100)) {
-            echo "<script>alert('success'); window.location.replace('facial_recog_add_photo.php');</script>";
+        if ($insert_query) {
+            echo "<script>alert('success');</script>";
+        } else {
+            echo "Something went wrong. Please try again!";
         }
-    }
+        // echo '<img src="'.$img.'" alt="">';
+        // $img = str_replace('data:image/png;base64,', '', $img);
+        // $img = str_replace(' ', '+', $img);
+        // $fileData = base64_decode($img);
+        // //saving
+        // $fileName = 'photo.jpg';
+        // file_put_contents($fileName, $fileData);
 
+        // $time = time();
+        // $new_img_name = $time . $img_name . ".jpg";
+
+        // echo "<script>alert('success'); window.location.replace('facial_recog_add_photo.php');</script>";
+    }
 
 
     ?>

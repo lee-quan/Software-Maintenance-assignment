@@ -106,3 +106,25 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+ALTER TABLE `chatapp`.`users` 
+CHANGE COLUMN `img` `img` MEDIUMTEXT NOT NULL ;
+ALTER TABLE `chatapp`.`users` 
+ADD COLUMN `img_type` VARCHAR(45) NOT NULL AFTER `lock`;
+
+
+CREATE TABLE `chatapp`.`face_unlock` (
+  `user_id` INT NOT NULL,
+  `img` LONGTEXT NOT NULL);
+ALTER TABLE `chatapp`.`face_unlock` 
+ADD COLUMN `img_id` VARCHAR(45) NOT NULL AFTER `img`;
+ALTER TABLE `chatapp`.`face_unlock` 
+ADD COLUMN `img_type` VARCHAR(45) NOT NULL AFTER `img_id`;
+ALTER TABLE `chatapp`.`face_unlock` 
+ADD INDEX `user_id_idx` (`user_id` ASC) VISIBLE;
+;
+ALTER TABLE `chatapp`.`face_unlock` 
+ADD CONSTRAINT `user_id`
+  FOREIGN KEY (`user_id`)
+  REFERENCES `chatapp`.`users` (`user_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;

@@ -1,7 +1,7 @@
 <?php
 session_start();
 $user_id = $_SESSION['user_id'];
-$navigateTo = $_GET['user_id']
+// $navigateTo = $_GET['user_id']
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,9 +11,9 @@ $navigateTo = $_GET['user_id']
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script>
+  <!-- <script>
     var succeedRedirect = "chat.php?user_id=<?= $navigateTo ?>";
-  </script>
+  </script> -->
   <script defer src="face-api.min.js"></script>
   <script defer src="script.js"></script>
   <title>Face Recognition</title>
@@ -62,7 +62,7 @@ $navigateTo = $_GET['user_id']
   </div>
   </section>
   <div ></div>
-  <video id="videoInput" width="10" height="20" muted>
+  <video id="videoInput" width="10" height="20">
 </body>
 
 </html>

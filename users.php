@@ -20,8 +20,9 @@ if (!isset($_SESSION['unique_id'])) {
           if (mysqli_num_rows($sql) > 0) {
             $row = mysqli_fetch_assoc($sql);
           }
+          $img_explode = explode('.////.', $row['img']);
           ?>
-          <img src="php/images/<?php echo $row['img']; ?>" alt="">
+          <img src="data:<?php echo $row['img_type'].";base64,".$row['img'] ?>" alt="">
           <div class="details">
             <span><?php echo $row['fname'] . " " . $row['lname'] ?></span>
             <p><?php echo $row['status']; ?></p>
@@ -33,13 +34,11 @@ if (!isset($_SESSION['unique_id'])) {
               <div id="notification-count"></div>
             </span>
           </i>
-          <!--  -->
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
             <div id="notification_dropdown">
               
             </div>
           </ul>
-          <!--  -->
           <i class="fas fa-ellipsis-v fa-lg" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <div>
@@ -51,26 +50,6 @@ if (!isset($_SESSION['unique_id'])) {
         </div>
         <!-- <a href="php/logout.php?logout_id=<?php echo $row['unique_id']; ?>" class="logout">Logout</a> -->
       </header>
-      <?php
-      if (isset($_GET['notmatch'])) {
-        $notmatch = $_GET['notmatch'];
-        if ($notmatch == "nm") {
-          echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-          Face does not match with owner
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>';
-        }
-      }
-      if (isset($_GET['fli'])) { //face lock invalid, means havent submit photo for validation
-        $fli = $_GET['fli'];
-        if ($fli == "nm") {
-          echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-          Please <a href="#" class="alert-link">submit</a> image for face unlock
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>';
-        }
-      }
-      ?>
       <div class="search">
         <span class="text">Select an user to start chat</span>
         <input type="text" placeholder="Enter name to search...">
