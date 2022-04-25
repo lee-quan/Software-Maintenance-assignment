@@ -45,8 +45,8 @@ while ($row2 = mysqli_fetch_assoc($query2)) {
             $namehighlight =  '<span >' . $row2['fname'] . " " . $row2['lname'] . '</span>';
         }
         echo '<a id="' . $row2['unique_id'] . '" href="chat.php?user_id=' . $row2['unique_id'] . '" style="text-decoration: none;">
-                        <div class="content">
-                        <img src="data:'. $row2['img_type'].";base64,".$row2['img'].' alt="">
+                        <div class="content">' .
+            "<img src='data:" . $row2['img_type'] . ";base64," . $row2['img'] . "' alt='' width=50 height=50/>" . '
                         <div class="details">
                         ' . $namehighlight . '
                             <p>' . $you . $msg . '</p>
@@ -57,9 +57,9 @@ while ($row2 = mysqli_fetch_assoc($query2)) {
     } else {
         $namehighlight =  '<span >' . $row2['fname'] . " " . $row2['lname'] . '</span>';
         echo '<a id="' . $row2['unique_id'] . '" href="chat.php?user_id=' . $row2['unique_id'] . '" style="text-decoration: none;">
-                        <div class="content">' 
-                        .'                        <img src="data:'. $row2['img_type'].";base64,".$row2['img'].' alt="">'
-                        .'<div class="details">
+                        <div class="content">'
+            . "<img src='data:" . $row2['img_type'] . ";base64," . $row2['img'] . "' alt=''/>"
+            . '<div class="details">
                         ' . $namehighlight . '
                             <p> No message... </p>
                         </div>
