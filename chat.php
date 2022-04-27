@@ -5,6 +5,28 @@ if (!isset($_SESSION['unique_id'])) {
   header("location: login.php");
 }
 $sessionID = $_SESSION['user_id'];
+$sql = "SELECT * FROM users WHERE user_id = $sessionID";
+$query = mysqli_query($conn, $sql);
+if (mysqli_num_rows($query) > 0) {
+  $row = mysqli_fetch_assoc($query);
+}
+if (str_contains($row['lock'], $_GET['user_id']) && !isset($_SESSION['chatToken'])) {
+  $lock = true;
+  $_SESSION['chatToken'] = md5(time());
+  $sql2 = "UPDATE users set token = '" . $_SESSION['chatToken'] . "' where user_id = '$sessionID'";
+  $query = mysqli_query($conn, "UPDATE users set token = '" . $_SESSION['chatToken'] . "' where user_id = '$sessionID'");
+  if($query){
+    header('Location: index_camera.php?user_id=' . $_GET['user_id']);
+  }
+} elseif (str_contains($row['lock'], $_GET['user_id']) && isset($_GET['token']) && $_GET['token'] == $row['token']) {
+  unset($_SESSION['chatToken']);
+  $query = mysqli_query($conn, 'UPDATE users SET token = NULL where user_id ='.$sessionID);
+  $lock = true;
+} elseif (str_contains($row['lock'], $_GET['user_id'])) {
+  $lock = true;
+} elseif (!str_contains($row['lock'], $_GET['user_id'])) {
+  $lock = false;
+}
 ?>
 <?php include_once "header.php"; ?>
 
@@ -31,11 +53,9 @@ $sessionID = $_SESSION['user_id'];
         if (in_array($chatUserID, $lock_arr)) {
           $gotlock = true;
         }
-
-        $img_explode = explode('.////.', $row['img']);
         ?>
         <a href="users.php" class="back-icon"><i class="fas fa-arrow-left"></i></a>
-        <img src="data:<?php echo $img_explode[0].";base64,".$img_explode[1] ?>" alt="">
+        <img src="data:<?php echo $row['img_type'] . ";base64," . $row['img'] ?>" alt="">
         <div class="details">
           <span><?php echo $row['fname'] . " " . $row['lname'] ?></span>
           <p><?php echo $row['status']; ?></p>
@@ -48,15 +68,9 @@ $sessionID = $_SESSION['user_id'];
 
           <i class="fas fa-ellipsis-v fa-lg flex-grow-1" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <div>
-              <?php
-              if (!$gotlock) {
-                echo '<li><a class="dropdown-item" id="lockChat" href="#">Lock Chat</a></li>';
-              } else {
-                echo '<li><a class="dropdown-item" id="unlockChat" href="#">Unlock Chat</a></li>';
-              }
-              ?>
-
+            <div id="lockorunlock">
+              <li><a class="dropdown-item" id="lockChat" href="#" <?php echo ($lock) ? 'hidden' : '' ?>>Lock Chat</a></li>
+              <li><a class="dropdown-item" id="unlockChat" href="#" <?php echo ($lock) ? '' : 'hidden' ?>>Unlock Chat</a></li>
             </div>
           </ul>
 
@@ -78,86 +92,49 @@ $sessionID = $_SESSION['user_id'];
   <script>
     $("#lockChat").click(function(e) {
       e.preventDefault();
-      //check whther this person has submitted image or not for face identificaiton
       var retrivedID = '<?php echo $sessionID ?>';
-      $.when((checkFolderExists(`labeled_images/${retrivedID}`)), ).done(function(ajax2Results) {
-        if (folderExistsResponse != 0) {
-          $.when((getAllDirFiles(`labeled_images/${retrivedID}`)), ).done(function(ajax3Results) {
-            if (folderExistsResponse != 0 && files.length != 0) {
-              $.ajax({
-                type: "POST",
-                url: "php/lockChat.php",
-                data: {
-                  chatUserID: "<?php echo $chatUserID ?>"
-                },
-                success: function(response) {
-                  alert("This chat room has been locked, face identification is required on next enter")
-                }
-              });
-            } else {
-              if (confirm("Empty face data, do you wish to add face for face unlock?")) {
-                window.location.href = 'imageSubmit.php'; //redirect to submit page
-              }
-
-            }
-
-          });
-        } else {
-          if (confirm("Empty face data, do you wish to add face for face unlock?")) {
-            window.location.href = 'imageSubmit.php'; //redirect to submit page
-          }
+      $.ajax({
+        type: "POST",
+        url: "php/lockChat.php",
+        data: {
+          lock: 'lockChat',
+          chatUserID: "<?php echo $chatUserID ?>",
+        },
+        success: function(response) {
+          if (response == 'success') alert("This chat room has been locked, face identification is required on next enter");
+          document.getElementById('unlockChat').hidden = false;
+          document.getElementById('lockChat').hidden = true;
         }
       });
 
-
-
-      function checkFolderExists(path) {
-        return $.ajax({
-          type: "GET",
-          url: "php/folderExists.php",
-          data: {
-            folder_path: path
-          },
-          success: function(response) {
-            folderExistsResponse = response;
-          }
-        });
-      }
-
-      function getAllDirFiles(dir) {
-        return $.ajax({
-          type: "GET",
-          url: "php/scanDirectory.php",
-          data: {
-            dir: dir
-          },
-          success: function(response) {
-            files = Object.values(JSON.parse(response))
-          }
-        });
-      }
-
     });
 
-    $("#unlockChat").click(function(e) {
-      e.preventDefault();
-      if (confirm("Are you sure?")) {
-        $.ajax({
-          type: "POST",
-          url: "php/unlockChat.php",
-          data: {
-            chatUserID: "<?= $chatUserID ?>"
-          },
+    $('#unlockChat').on('click', function(event) {
+      event.preventDefault();
+      var retrivedID = '<?php echo $sessionID ?>';
+      $.ajax({
+        type: "POST",
+        url: "php/lockChat.php",
+        data: {
+          lock: 'unlockChat',
+          chatUserID: "<?php echo $chatUserID ?>",
 
-          success: function(response) {
-            alert("This chat room has been unlocked, face identification is not required on next enter")
-          }
-        });
-      }
-
+        },
+        success: function(response) {
+          // alert("This chat room has been locked, face identification is required on next enter");
+          alert(response);
+          document.getElementById('unlockChat').hidden = true;
+          document.getElementById('lockChat').hidden = false;
+        }
+      });
     });
   </script>
 
 </body>
 
 </html>
+
+<?php
+// unset($_SESSION['chatToken']);
+
+?>

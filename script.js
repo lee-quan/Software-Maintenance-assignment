@@ -1,3 +1,4 @@
+
 const imageUpload = document.getElementById("imageUpload");
 const video = document.getElementById("videoInput");
 
@@ -56,7 +57,8 @@ async function recognizeFaces() {
     $("#progressMatchHeader").prop("hidden", false);
     video.addEventListener("play", async () => {
       // console.log('Playing')
-      const canvas = faceapi.createCanvasFromMedia(video);
+      // const canvas = faceapi.createCanvasFromMedia(video);
+      const canvas = faceapi.createCanvas(video);
       document.body.append(canvas);
       const displaySize = {
         width: video.width,
@@ -101,7 +103,7 @@ async function recognizeFaces() {
           if (match >= 10 && entered == 0) {
             //match
             entered++;
-            window.location.href = 'users.php';
+            window.location.href = succeedRedirect;
           }
 
           drawBox.draw(canvas);

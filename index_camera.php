@@ -2,6 +2,7 @@
 session_start();
 $user_id = $_SESSION['user_id'];
 // $navigateTo = $_GET['user_id']
+echo $_SESSION['chatToken'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,13 +10,11 @@ $user_id = $_SESSION['user_id'];
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+ 
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <!-- <script>
-    var succeedRedirect = "chat.php?user_id=<?= $navigateTo ?>";
-  </script> -->
-  <script defer src="face-api.min.js"></script>
-  <script defer src="script.js"></script>
+  <script>
+    var succeedRedirect = "chat.php?user_id=<?php echo $_GET['user_id']."&token=". $_SESSION['chatToken'] ?>";
+  </script>
   <title>Face Recognition</title>
   <style>
     body {
@@ -63,6 +62,10 @@ $user_id = $_SESSION['user_id'];
   </section>
   <div ></div>
   <video id="videoInput" width="10" height="20">
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+  <script defer src="face-api.min.js"></script>
+  <script defer src="script.js"></script>
+ 
 </body>
 
 </html>

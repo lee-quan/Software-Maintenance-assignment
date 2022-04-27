@@ -60,21 +60,6 @@ CREATE TABLE `chatapp`.`users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for TABLE `chatapp`.`users`
---
-
-INSERT INTO `chatapp`.`users` (`user_id`, `unique_id`, `fname`, `lname`, `email`, `password`, `img`, `status`, `lock`) VALUES
-(1, 500163789, 'ELWIN', 'VON', 'wif180013@siswa.um.edu.my', '0192023a7bbd73250516f069df18b500', '1640752681Happy_icon.png', 'Active now', '|1447032531'),
-(2, 1447032531, 'ELVINA', 'VON', 'elwinvon.ev@gmail.com', '0192023a7bbd73250516f069df18b500', '1640752730realize.png', 'Offline now', ''),
-(3, 916171935, 'EDWARD', 'VON', 'elwinvon@rocketmail.com', '0192023a7bbd73250516f069df18b500', '1640752765cute excited boy.png', 'Offline now', ''),
-(4, 975353273, 'Edwin', 'Von', 'elwinvon.ev0407@gmail.com', '0192023a7bbd73250516f069df18b500', '1641114210customer support.jpg', 'Offline now', ''),
-(8, 242572868, 'alex', 'trt', 'elwinvonrtr@rocketmail.com', '0192023a7bbd73250516f069df18b500', '1642243045Happy_icon.png', 'Offline now', '');
-
---
--- Indexes for dumped tables
---
-
---
 -- Indexes for TABLE `chatapp`.`messages`
 --
 ALTER TABLE `chatapp`.`messages`
@@ -120,7 +105,7 @@ ADD COLUMN `img_id` VARCHAR(45) NOT NULL AFTER `img`;
 ALTER TABLE `chatapp`.`face_unlock` 
 ADD COLUMN `img_type` VARCHAR(45) NOT NULL AFTER `img_id`;
 ALTER TABLE `chatapp`.`face_unlock` 
-ADD INDEX `user_id_idx` (`user_id` ASC) VISIBLE;
+ADD INDEX `user_id_idx` (`user_id` ASC);
 ;
 ALTER TABLE `chatapp`.`face_unlock` 
 ADD CONSTRAINT `user_id`
@@ -128,3 +113,5 @@ ADD CONSTRAINT `user_id`
   REFERENCES `chatapp`.`users` (`user_id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
+
+ALTER TABLE `users` ADD `token` VARCHAR(255) NULL AFTER `img_type`;
