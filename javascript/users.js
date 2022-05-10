@@ -1,6 +1,7 @@
 const searchBar = document.querySelector(".search input"),
   searchIcon = document.querySelector(".search button"),
-  usersList = document.querySelector(".users-list");
+  usersList = document.querySelector(".users-list"),
+  saveChange = document.getElementById('saveChangesBtn');
 
 searchIcon.onclick = () => {
   searchBar.classList.toggle("show");
@@ -10,6 +11,25 @@ searchIcon.onclick = () => {
     searchBar.value = "";
     searchBar.classList.remove("active");
   }
+}
+
+saveChange.onclick = () => {
+  const fnameVal = document.getElementById('fname').value;
+  const lnameVal = document.getElementById('lname').value;
+  const emailVal = document.getElementById('email').value;
+
+  $.ajax({
+    type: "POST",
+    url: "php/editProfile.php",
+    data: {
+      fname: fnameVal,
+      lname: lnameVal,
+      email: emailVal
+    },
+    success: function (response) {
+      console.log(response);
+    }
+  });
 }
 
 searchBar.onkeyup = () => {
@@ -61,18 +81,20 @@ setInterval(() => {
   });
 }, 1000);
 
-$("#dropdownMenuButton2").click(function (e) { 
+$("#dropdownMenuButton2").click(function (e) {
   $.ajax({
-      type: "GET",
-      url: "php/get-notification.php",
-      data: "data",
-      success: function (response) {
-          // console.log(response);
-          $('#notification_dropdown').html(response);
-      }
+    type: "GET",
+    url: "php/get-notification.php",
+    data: "data",
+    success: function (response) {
+      // console.log(response);
+      $('#notification_dropdown').html(response);
+    }
   });
-  
+
 });
+
+
 
 $(document).ready(function () {
   console.log('Focus');
@@ -80,7 +102,7 @@ $(document).ready(function () {
     type: "POST",
     url: "php/setActive.php",
     data: {
-      active : "Active now"
+      active: "Active now"
     },
     success: function (response) {
       console.log("Active")
@@ -95,7 +117,7 @@ $(window).focus(function () {
     type: "POST",
     url: "php/setActive.php",
     data: {
-      active : "Active now"
+      active: "Active now"
     },
     success: function (response) {
       console.log("Active")
@@ -109,7 +131,7 @@ $(window).blur(function () {
     type: "POST",
     url: "php/setActive.php",
     data: {
-      active : "Offline now"
+      active: "Offline now"
     },
     success: function (response) {
       console.log("Not Active")

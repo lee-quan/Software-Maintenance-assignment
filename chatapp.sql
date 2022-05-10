@@ -114,4 +114,4 @@ ADD CONSTRAINT `user_id`
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
 
-ALTER TABLE `users` ADD `token` VARCHAR(255) NULL AFTER `img_type`;
+ALTER TABLE `chatapp`.`users` ADD `token` VARCHAR(255) NULL AFTER `img_type`;
