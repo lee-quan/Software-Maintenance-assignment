@@ -115,3 +115,6 @@ ADD CONSTRAINT `user_id`
   ON UPDATE NO ACTION;
 
 ALTER TABLE `chatapp`.`users` ADD `token` VARCHAR(255) NULL AFTER `img_type`;
+ALTER TABLE `chatapp`.`users` ADD `verified` INT NOT NULL DEFAULT '0' AFTER `token`;
+
+CREATE TABLE `chatapp`.`friendship` ( `to` INT NOT NULL , `from` INT NOT NULL ) ENGINE = InnoDB;
