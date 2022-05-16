@@ -1,20 +1,29 @@
 <?php
-$sql = "SELECT * FROM users WHERE NOT unique_id = {$outgoing_id} ORDER BY user_id DESC";
-$query = mysqli_query($conn, $sql);
-$row = $query->fetch_assoc();
+// $sql = "SELECT * FROM users WHERE NOT unique_id = {$outgoing_id} ORDER BY user_id DESC";
+// $query = mysqli_query($conn, $sql);
 
 
 
-$sql2 = "SELECT * FROM users u
-    LEFT JOIN 
-    (SELECT * FROM messages m WHERE m.incoming_msg_id = {$row['unique_id']} or m.outgoing_msg_id = {$row['unique_id']}
-    ORDER BY date) n
-    ON n.incoming_msg_id = u.unique_id or n.outgoing_msg_id = u.unique_id 
-    WHERE NOT unique_id = {$outgoing_id} GROUP BY u.unique_id ORDER BY status, n.date DESC, user_id DESC";
-// echo $sql2;
-// $sql2 = "SELECT * FROM messages WHERE (incoming_msg_id = {$row['unique_id']}
-//             OR outgoing_msg_id = {$row['unique_id']}) AND (outgoing_msg_id = {$outgoing_id} 
-//             OR incoming_msg_id = {$outgoing_id}) ORDER BY msg_id DESC LIMIT 1";
+$sql2 = "WITH rownum AS (
+    SELECT *,ROW_NUMBER() OVER (PARTITION BY u.user_id ORDER BY n.date DESC) AS rn FROM users u LEFT JOIN (SELECT * FROM messages m WHERE m.incoming_msg_id = 1178272901 or m.outgoing_msg_id = 1178272901) n ON n.incoming_msg_id = u.unique_id or n.outgoing_msg_id = u.unique_id WHERE NOT unique_id = 1178272901 ORDER BY n.date DESC, status, user_id DESC
+)
+SELECT * FROM rownum WHERE rn = 1";
+//     $sql2 = "SELECT * FROM users u
+// LEFT JOIN 
+// (SELECT * FROM messages m WHERE m.incoming_msg_id = {$outgoing_id} or m.outgoing_msg_id = {$outgoing_id}
+// ORDER BY date DESC) n
+// ON n.incoming_msg_id = u.unique_id or n.outgoing_msg_id = u.unique_id 
+// WHERE NOT unique_id = {$outgoing_id} GROUP BY u.user_id ORDER BY status, n.date DESC, user_id DESC";
+//     $sql2 = "SELECT * FROM users u
+// LEFT JOIN 
+// (SELECT * FROM messages m WHERE m.incoming_msg_id = {$row['unique_id']} or m.outgoing_msg_id = {$row['unique_id']}
+// ORDER BY date) n
+// ON n.incoming_msg_id = u.unique_id or n.outgoing_msg_id = u.unique_id 
+// WHERE NOT unique_id = {$outgoing_id} GROUP BY u.unique_id ORDER BY status, n.date DESC, user_id DESC";
+
+//     // $sql2 = "SELECT * FROM messages WHERE (incoming_msg_id = {$row['unique_id']}
+//     //             OR outgoing_msg_id = {$row['unique_id']}) AND (outgoing_msg_id = {$outgoing_id} 
+//     //             OR incoming_msg_id = {$outgoing_id}) ORDER BY msg_id DESC LIMIT 1";
 
 $query2 = mysqli_query($conn, $sql2);
 while ($row2 = mysqli_fetch_assoc($query2)) {
@@ -32,8 +41,8 @@ while ($row2 = mysqli_fetch_assoc($query2)) {
         $read = $row2['read'];
         $yousent = $row2['outgoing_msg_id'];
     } else {
-        $msg_id = 0;
-        $read = 0;
+        // $msg_id = 0;
+        // $read = 0;
         $yousent = $row2['outgoing_msg_id'];
     }
 
