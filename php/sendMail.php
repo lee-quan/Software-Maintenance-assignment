@@ -13,7 +13,7 @@ $mail = new PHPMailer(true);
 
 $subject = "Email Activation";
 $message = "You can verify your account by clicking the link http://localhost/Software-Maintenance-assignment/verify.php?token=".$_POST['token'];
-$to = $email;
+
 try {
     //Server settings
     $mail->isSMTP();                                            //Send using SMTP

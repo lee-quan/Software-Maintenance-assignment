@@ -119,7 +119,7 @@ ALTER TABLE `chatapp`.`users` ADD `verified` INT NOT NULL DEFAULT '0' AFTER `tok
 
 CREATE TABLE `chatapp`.`friendship` ( `to` INT NOT NULL , `from` INT NOT NULL ) ENGINE = InnoDB;
 
-CREATE TABLE `notification` (
+CREATE TABLE `chatapp`.`notification` (
   `to` int(11) NOT NULL,
   `from` int(11) NOT NULL,
   `notification_type` int(11) NOT NULL,
