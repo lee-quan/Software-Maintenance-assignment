@@ -3,9 +3,17 @@
 // $query = mysqli_query($conn, $sql);
 
 
+session_start();
+$unique_id = $_SESSION['unique_id'];
 
 $sql2 = "WITH rownum AS (
-    SELECT *,ROW_NUMBER() OVER (PARTITION BY u.user_id ORDER BY n.date DESC) AS rn FROM users u LEFT JOIN (SELECT * FROM messages m WHERE m.incoming_msg_id = 1178272901 or m.outgoing_msg_id = 1178272901) n ON n.incoming_msg_id = u.unique_id or n.outgoing_msg_id = u.unique_id WHERE NOT unique_id = 1178272901 ORDER BY n.date DESC, status, user_id DESC
+    SELECT *,
+    ROW_NUMBER() OVER (PARTITION BY u.user_id ORDER BY n.date DESC) AS rn 
+    FROM users u 
+    LEFT JOIN (SELECT * FROM messages m WHERE m.incoming_msg_id = $unique_id or m.outgoing_msg_id = $unique_id) n 
+    ON n.incoming_msg_id = u.unique_id or n.outgoing_msg_id = u.unique_id 
+    WHERE NOT unique_id = $unique_id 
+    ORDER BY n.date DESC, status, user_id DESC
 )
 SELECT * FROM rownum WHERE rn = 1";
 //     $sql2 = "SELECT * FROM users u
