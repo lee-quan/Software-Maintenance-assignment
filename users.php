@@ -30,7 +30,7 @@ if (mysqli_num_rows($sql) > 0) {
                 <label for="" class="form-label">First Name</label>
               </div>
               <div class="col-12">
-                <input type="text" class="form-control" id="fname" value="<?php echo $row['fname']?>">
+                <input type="text" class="form-control" id="fname" value="<?php echo $row['fname'] ?>">
               </div>
             </div>
             <div class="col-6">
@@ -38,7 +38,7 @@ if (mysqli_num_rows($sql) > 0) {
                 <label for="" class="form-label">Last Name</label>
               </div>
               <div class="col-12">
-                <input type="text" class="form-control" id="lname" value="<?php  echo $row['lname']?>">
+                <input type="text" class="form-control" id="lname" value="<?php echo $row['lname'] ?>">
               </div>
             </div>
           </div>
@@ -47,7 +47,7 @@ if (mysqli_num_rows($sql) > 0) {
               <label for="" class="form-label">Email</label>
             </div>
             <div class="col-12">
-              <input type="email" class="form-control" id="email" value="<?php  echo $row['email']?>">
+              <input type="email" class="form-control" id="email" value="<?php echo $row['email'] ?>">
             </div>
           </div>
         </div>
@@ -93,6 +93,7 @@ if (mysqli_num_rows($sql) > 0) {
         <!-- <a href="php/logout.php?logout_id=<?php echo $row['unique_id']; ?>" class="logout">Logout</a> -->
       </header>
       <div class="search">
+      
         <span class="text">Select an user to start chat</span>
         <input type="text" placeholder="Enter name to search...">
         <button><i class="fas fa-search"></i></button>
@@ -100,7 +101,9 @@ if (mysqli_num_rows($sql) > 0) {
 
       <div class="users-list">
 
+
       </div>
+
     </section>
   </div>
 

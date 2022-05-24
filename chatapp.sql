@@ -117,11 +117,11 @@ ADD CONSTRAINT `user_id`
 ALTER TABLE `chatapp`.`users` ADD `token` VARCHAR(255) NULL AFTER `img_type`;
 ALTER TABLE `chatapp`.`users` ADD `verified` INT NOT NULL DEFAULT '0' AFTER `token`;
 
-CREATE TABLE `chatapp`.`friendship` ( `to` INT NOT NULL , `from` INT NOT NULL ) ENGINE = InnoDB;
+CREATE TABLE `chatapp`.`friendship` ( `to_` INT NOT NULL , `from` INT NOT NULL ) ENGINE = InnoDB;
 
 CREATE TABLE `chatapp`.`notification` (
-  `to` int(11) NOT NULL,
-  `from` int(11) NOT NULL,
+  `to_` int(11) NOT NULL,
+  `from_` int(11) NOT NULL,
   `notification_type` int(11) NOT NULL,
   `message` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
