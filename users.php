@@ -11,7 +11,7 @@ if (mysqli_num_rows($sql) > 0) {
 
 ?>
 <?php include_once "header.php"; ?>
-<script src="face-api.min.js"></script>
+<script src="javascript/face-api.min.js"></script>
 <!-- <script defer src="script.js"></script> -->
 
 <body>

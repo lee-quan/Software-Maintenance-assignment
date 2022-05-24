@@ -63,8 +63,8 @@ echo $_SESSION['chatToken'];
   <div ></div>
   <video id="videoInput" width="10" height="20">
   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-  <script defer src="face-api.min.js"></script>
-  <script defer src="script.js"></script>
+  <script defer src="javascript/face-api.min.js"></script>
+  <script defer src="javascript/script.js"></script>
  
 </body>
 
