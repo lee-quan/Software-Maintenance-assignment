@@ -142,11 +142,25 @@ $(document).ready(function () {
     $.ajax({
       url: "php/friendship.php",
       method: "POST",
-      data: { id },
+      data: { id, action:'add' },
       success: function (response) {
         // var resp = $.parseJSON(response);
 
         alert(response);
+      },
+    });
+  });
+  $(document).on("click", ".remove", function () {
+    this.innerHTML= '<i class="fas fa-solid fa-xmark"></i>';
+    var id = this.getAttribute("id");
+    $.ajax({
+      url: "php/friendship.php",
+      method: "POST",
+      data: { id, action:'remove' },
+      success: function (response) {
+        // var resp = $.parseJSON(response);
+
+        // alert(response);
       },
     });
   });

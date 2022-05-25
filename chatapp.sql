@@ -123,5 +123,5 @@ CREATE TABLE `chatapp`.`notification` (
   `to_` int(11) NOT NULL,
   `from_` int(11) NOT NULL,
   `notification_type` int(11) NOT NULL,
-  `message` int(11) NOT NULL
+  `message` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
