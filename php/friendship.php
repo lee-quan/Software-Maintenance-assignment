@@ -27,7 +27,7 @@ if (isset($_POST['action'])) {
         }
     }
     elseif ($_POST['action'] === 'remove') {
-        $sql = "DELETE FROM notification WHERE(" . $_POST["id"] . "," . $_SESSION['unique_id'] . ")";
+        $sql = "DELETE FROM notification (" . $_POST["id"] . "," . $_SESSION['unique_id'] . ")";
         $query = mysqli_query($conn, $sql);
         // echo $sql;
         if ($query) {
