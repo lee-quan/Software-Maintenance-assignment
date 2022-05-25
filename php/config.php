@@ -1,8 +1,4 @@
 <?php
-  // $hostname = "chatapptesting.educationhost.cloud";
-  // $username = "mbecspyx_elwin";
-  // $password = "WIF3005testing";
-  // $dbname = "mbecspyx_chatapp";
 
   $hostname = "localhost";
   $username = "root";
