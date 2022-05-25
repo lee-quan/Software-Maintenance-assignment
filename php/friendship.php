@@ -26,4 +26,19 @@ if (isset($_POST['action'])) {
             }
         }
     }
+    elseif ($_POST['action'] === 'remove') {
+        $sql = "DELETE FROM notification WHERE(" . $_POST["id"] . "," . $_SESSION['unique_id'] . ")";
+        $query = mysqli_query($conn, $sql);
+        // echo $sql;
+        if ($query) {
+            $sql = "INSERT INTO notification (to_, from_, notification_type, message) VALUES (" . $_POST["id"] . "," . $_SESSION['unique_id'] . ",0,'{$fname} sent you a friend request.')";
+            echo $sql;
+            $query1 = mysqli_query($conn, $sql);
+            if ($query1) {
+                // echo 12312321312;
+            }else{
+                // echo 0000;
+            }
+        }
+    }
 }
